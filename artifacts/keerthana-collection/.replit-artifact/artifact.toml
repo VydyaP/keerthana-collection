@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Keerthana Collection"
+description = "A private, mobile-first archive for organizing Carnatic keerthanas, lyrics, translations, and multilingual notation files for personal use and trusted sharing."
+version = "1.0.0"
+id = "artifacts/keerthana-collection"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19579
+
+[services.development]
+run = "pnpm --filter @workspace/keerthana-collection run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/keerthana-collection", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/keerthana-collection/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19579"
+BASE_PATH = "/"
